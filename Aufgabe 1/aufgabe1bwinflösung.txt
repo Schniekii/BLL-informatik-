@@ -1,0 +1,90 @@
+import string
+listweird = ["«","»"]
+buch = []
+def dateiauswertung(dateiname):
+    with open(dateiname, encoding='utf-8') as d:
+        text = d.read()
+        words = text.split()
+        words = [''.join(letter for letter in word if letter not in string.punctuation and  letter not in listweird) for word in words if word]
+        return words
+buch1 = dateiauswertung("Alice_im_Wunderland.txt")
+zitat = dateiauswertung("stoerung2.txt")
+for i in buch1:
+    if i != "":
+        buch.append(i.lower())
+
+
+def getwords(zitat):
+    blankwordindex = []
+    counter = 0
+    for i in zitat:
+        if i != "":
+            blankwordindex.append(counter)
+        counter = counter +1
+    return blankwordindex
+def censoredwords(zitat):
+    blankwordindex = []
+    counter = 0
+    for i in zitat:
+        if i == "_":
+            blankwordindex.append(counter)
+        counter = counter +1
+    return blankwordindex
+
+words =[ i for i in zitat if i != "_"]
+wordtest =["ich","habe","so"]
+index_words = getwords(zitat)
+index_words.remove(0)
+index_censoredwords = censoredwords(zitat)
+print(index_censoredwords,index_words)
+print(words)
+lengthzitat = len(zitat)
+lengthwords = len(words)
+def checklists(oldlist,newlist):
+    checker = "false"
+    for i in oldlist:
+        if i in newlist:
+            checker = "True"
+        else:
+            checker = "false"
+            return checker
+    return checker
+
+
+be = [i for i in zitat if i != ""]
+fertiges_zitat = []
+fertiges_zitatindex= []
+for zahl,b in enumerate(buch):
+    for i in index_words:
+
+     if b == zitat[0] and buch[zahl+i] == zitat[i].lower():
+        #print(b,buch[zahl+i],"huraaaaaaaaaaaaaa",zahl)
+        for i in range(len(zitat)):
+            fertiges_zitat.append(buch[zahl+i])
+            fertiges_zitatindex.append(zahl+i)
+        if len(fertiges_zitat) == len(zitat)and checklists(be,fertiges_zitat)== "True":
+             print(fertiges_zitat)
+             print(fertiges_zitatindex)
+             print("das fertige Zitat lautet:"," ".join(fertiges_zitat))
+             print(be)
+        if len(fertiges_zitat) > len(zitat):
+            fertiges_zitat.clear()
+            fertiges_zitatindex.clear()
+
+
+
+
+testlist = ['das', '', 'mir', '', '', '', 'vor']
+testlist2 = ['das', 'kommt', 'mir', 'gar', 'nicht', 'richtig', 'vor']
+testlist3 = ['das', 'mir', 'clara']
+
+def checklists(oldlist,newlist):
+    checker = "false"
+    for i in oldlist:
+        if i in newlist:
+            checker = "True"
+        else:
+            checker = "false"
+            return checker
+    return checker
+print(checklists(testlist3,testlist2))
